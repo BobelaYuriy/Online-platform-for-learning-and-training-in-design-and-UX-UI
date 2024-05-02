@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { MyButton } from "../../components/UI/button/MyButton";
+import { Link } from "react-router-dom";
 import "./LoginSignup.css";
 
-export const LoginSignup = () => {
+export const SignIn = () => {
   return (
     <div className="containerSignUp">
       <div className="heading">Sign In</div>
       <Form className="form">
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group>
           <Form.Control
             required
             className="input"
@@ -17,7 +19,7 @@ export const LoginSignup = () => {
             placeholder="E-mail"
           />
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group>
           <Form.Control
             required
             className="input"
@@ -27,10 +29,11 @@ export const LoginSignup = () => {
             placeholder="Password"
           />
         </Form.Group>
-        <span className="forgot-password">
-          <a href="#">Forgot Password ?</a>
-        </span>
-        <input className="login-button" type="submit" value="Sign In" />
+        {/* кнопка */}
+        <MyButton>Sign in</MyButton>
+        <Link to="/signup" className="signup-link">
+          Don't have accaunt? SignUp
+        </Link>
       </Form>
       <div className="social-account-container">
         <span className="title">Or Sign in with</span>

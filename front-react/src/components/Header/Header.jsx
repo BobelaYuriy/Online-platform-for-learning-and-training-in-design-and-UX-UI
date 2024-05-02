@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { Button, Navbar, Nav, Form, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BurgerMenuButton } from "../BurgerMenuButton/BurgerMenuButton";
-
+import { MyButton } from "../UI/button/MyButton";
+import Search from "../UI/search/search";
 export const Header = () => {
   const [open, setOpen] = useState(false);
 
   const handleToggle = () => setOpen(!open);
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      variant="dark"
+      style={{ background: "rgb(50, 19, 54)" }}
+    >
       <BurgerMenuButton handleToggle={handleToggle} />
       <Navbar.Brand>Design and UX&UI</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -33,28 +39,36 @@ export const Header = () => {
           </NavDropdown>
         </Nav>
 
-        {/* Пошукова стрічка посередині */}
-        <div className="d-flex justify-content-center align-items-center flex-grow-1">
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="mr-2 rounded-pill me-2"
-              style={{ width: "400px" }} // Змінюємо ширину тут
-            />
-          </Form>
-        </div>
+        <Search />
 
         <Nav>
           <Nav.Item className="d-flex justify-content-between">
-            <Link to="/signin">
-              <Button variant="primary" className="me-2">
-                Sign In
-              </Button>
+            <Link to="/signin" style={{ textDecoration: "none" }}>
+              <MyButton
+                style={{
+                  width: 100,
+                  height: 50,
+                  marginRight: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                Sign in
+              </MyButton>
             </Link>
-            <Button variant="primary" className="me-2">
+
+            {/* <MyButton
+              style={{
+                width: 90,
+                height: 50,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               Sign out
-            </Button>
+            </MyButton> */}
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>

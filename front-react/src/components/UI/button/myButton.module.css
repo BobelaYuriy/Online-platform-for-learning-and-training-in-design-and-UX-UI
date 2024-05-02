@@ -1,0 +1,27 @@
+.mybutton {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(
+    45deg,
+    rgb(84, 16, 211) 0%,
+    rgb(209, 18, 200) 100%
+  );
+  color: white;
+  padding-block: 15px;
+  margin: 10px auto;
+  border-radius: 20px;
+  box-shadow: rgba(145, 50, 140, 0.878) 0px 23px 10px -20px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.mybutton:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(145, 50, 140, 0.878) 0px 23px 10px -20px;
+}
+
+.mybutton:active {
+  transform: scale(0.95);
+  box-shadow: rgba(145, 50, 140, 0.878) 0px 23px 10px -20px;
+}

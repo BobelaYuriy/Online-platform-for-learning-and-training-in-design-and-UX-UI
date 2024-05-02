@@ -57,15 +57,13 @@ Smit Prajapati */
   border-inline: 2px solid #12b1d1;
 }
 
-.form .forgot-password {
+.form .signup-link {
   display: block;
   margin-top: 10px;
   margin-left: 10px;
-}
-
-.form .forgot-password a {
   font-size: 11px;
-  color: #0099ff;
+  color: #bd00ce;
+  text-align: center;
   text-decoration: none;
 }
 
@@ -85,16 +83,6 @@ Smit Prajapati */
   box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
   border: none;
   transition: all 0.2s ease-in-out;
-}
-
-.form .login-button:hover {
-  transform: scale(1.03);
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
-}
-
-.form .login-button:active {
-  transform: scale(0.95);
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
 }
 
 .social-account-container {
