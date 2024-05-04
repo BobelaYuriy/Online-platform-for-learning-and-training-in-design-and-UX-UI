@@ -1,25 +1,17 @@
 import React, { useState } from "react";
-import { Button, Navbar, Nav, Form, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BurgerMenuButton } from "../BurgerMenuButton/BurgerMenuButton";
+import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MyButton } from "../UI/button/MyButton";
 import Search from "../UI/search/search";
 import Avatar from "../UI/Avatar/Avatar";
 import { useSelector } from "react-redux";
-
+import "./Header.css";
 export const Header = () => {
-  const [open, setOpen] = useState(false);
   const { isAuthorized } = useSelector((state) => state.user);
-  const handleToggle = () => setOpen(!open);
 
   return (
-    <Navbar
-      collapseOnSelect
-      expand="lg"
-      variant="dark"
-      style={{ background: "rgb(50, 19, 54)" }}
-    >
-      <BurgerMenuButton handleToggle={handleToggle} />
+    <Navbar className="navbar" collapseOnSelect expand="lg" variant="dark">
       <Navbar.Brand>Design and UX&UI</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -77,14 +69,7 @@ export const Header = () => {
                     Sign out
                   </MyButton>
                 </Link>
-                {isAuthorized && (
-                  <Avatar
-                    imageSrc={
-                      "https://i.pinimg.com/564x/96/b8/7e/96b87ed46354a6bcedaef2799b6553c3.jpg"
-                    }
-                    size="medium"
-                  />
-                )}
+                {isAuthorized && <BurgerMenu />}
               </Nav.Item>
             )}
           </Nav.Item>

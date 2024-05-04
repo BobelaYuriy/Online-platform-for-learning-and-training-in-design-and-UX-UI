@@ -6,9 +6,7 @@ import { getCourses } from "../../network/network";
 import { courseApi } from "../../services/coursesService";
 
 const DesignPage = () => {
-  const prikol = useSelector((state) => state.course.prikol);
   const { data: courses } = courseApi.useGetCoursesQuery(10);
-  console.log(prikol);
   return (
     <Container>
       <div className="container rounded p-4 bg-light">
@@ -19,7 +17,6 @@ const DesignPage = () => {
           <CourseCard key={course._id} course={course} />
         ))}
       </Row>
-      {!prikol && <h1>О ЦЕ ПРИКОЛ АХАХАХА</h1>}
     </Container>
   );
 };

@@ -1,0 +1,35 @@
+.navbar {
+  background-color: rgb(50, 19, 54);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  position: fixed;
+  height: 80px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.nav-link:hover {
+  color: #ddd;
+}
+
+.avatar-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.my-button {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
