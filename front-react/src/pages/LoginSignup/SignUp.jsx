@@ -12,7 +12,7 @@ export const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const { isAuthorized, user } = useSelector((state) => state.user);
+  const { isAuthorized, userData } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -36,7 +36,10 @@ export const SignUp = () => {
   };
 
   useEffect(() => {
-    if (isAuthorized) navigate("/");
+    if (isAuthorized) {
+      navigate("/");
+      console.log(userData);
+    }
   }, [isAuthorized, navigate]);
 
   return (

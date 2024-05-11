@@ -6,23 +6,33 @@ import { MyButton } from "../UI/button/MyButton";
 import Search from "../UI/search/search";
 import Avatar from "../UI/Avatar/Avatar";
 import { useSelector } from "react-redux";
+import { signOut } from "../../store/slices/userSlice";
 import "./Header.css";
+import { useDispatch } from "react-redux";
+
 export const Header = () => {
   const { isAuthorized } = useSelector((state) => state.user);
 
+  const dispatch = useDispatch();
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
+
   return (
     <Navbar className="navbar" collapseOnSelect expand="lg" variant="dark">
-      <Navbar.Brand>Design and UX&UI</Navbar.Brand>
+      <Navbar.Brand className="sans ms-3">Design and UX&UI</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Link to="/" className="nav-link">
-            Home
+            <div className="sans">Home</div>
           </Link>
           <NavDropdown
             id="nav-dropdown-dark-example"
             title="Courses"
             menuVariant="dark"
+            className="sans"
           >
             <NavDropdown.Item href="#action/3.1">
               Graphic design
@@ -65,6 +75,7 @@ export const Header = () => {
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                    onClick={handleSignOut}
                   >
                     Sign out
                   </MyButton>

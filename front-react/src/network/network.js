@@ -1,17 +1,20 @@
 import $api from './index'
+import axios from 'axios';
+
+const API_URL = 'http://localhost:3001/api'
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 //файл із запитами аксіоса
-export const signIn = async (email, password) => {
+export const signIn = async ({ email, password }) => {
     try {
-        const response = await $api.post('/signin', { username, password });
+        const response = await $api.post('/signin', { email, password });
         return response.data;
     } catch (error) {
         console.error('Error signing in:', error);
         throw error;
     }
 };
-
 
 export const signUp = async ({ email, username, password }) => {
     try {
@@ -23,15 +26,34 @@ export const signUp = async ({ email, username, password }) => {
     }
 }
 
-// export const signOut = async () => {
-//     try {
-//         const response = await $api.post('/signout');
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error logging out:', error);
-//         throw error;
-//     }
-// };
+export const signOutUser = async () => {
+    try {
+        const response = await $api.post('/signout');
+        return response.data;
+    } catch (error) {
+        console.error('Error logging out:', error);
+        throw error;
+    }
+};
+
+export const getUser = async () => {
+    try {
+        const response = await $api.post('/profile');
+        return response.data;
+    } catch (error) {
+        console.error('Error getUser:', error);
+        throw error;
+    }
+};
+
+export const chechAuth = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true })
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
 
 //курси
 export const getCourses = createAsyncThunk(

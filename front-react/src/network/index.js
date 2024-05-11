@@ -8,32 +8,36 @@ const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-    const token = JSON.parse(localStorage.getItem('persist:auth'))?.token.slice(1, -1);
+    const token = JSON.parse(localStorage.getItem('persist:user'))?.token.slice(1, -1);
     config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
 
 
 $api.interceptors.response.use(
-    (config) => config,
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
         if (error?.response?.status === 401 && !originalRequest._isRetry) {
             originalRequest._isRetry = true;
             try {
                 const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
-                localStorage.setItem('persist:auth', { token: response.data.accessToken });
-                return $api.request(originalRequest);
+                localStorage.setItem('persist:user', { token: response.data.accessToken });
+                // Повертаємо дані з сервера після успішного оновлення токену
+                return response;
             } catch {
                 console.error('User is not authorized');
-                document.location.replace('/login');
-                localStorage.setItem('persist:auth', { isAuth: false, token: null, user: null });
+                document.location.replace('/signin');
+                localStorage.setItem('persist:user', { isAuthorized: false, token: null, userData: null });
                 console.error(`Refresh token error: ${error}`);
                 throw new Error('Refresh token error');
             }
         } else {
             console.error(`User isn't authorized error: ${error}`);
+            // Повертаємо помилку у випадку, якщо токен не може бути оновлений
+            return Promise.reject(error);
         }
     },
 );
+
 export default $api;

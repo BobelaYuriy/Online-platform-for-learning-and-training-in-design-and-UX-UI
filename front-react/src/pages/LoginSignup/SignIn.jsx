@@ -1,14 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MyButton } from "../../components/UI/button/MyButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { signInUser } from "../../store/slices/userSlice";
 import "./LoginSignup.css";
 
 export const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthorized, token } = useSelector((state) => state.user);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = formData;
+    try {
+      dispatch(signInUser(formData)); // Викликаємо функцію signInUser
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthorized) {
+      navigate("/");
+    }
+  }, [isAuthorized, navigate]);
+
+  useEffect(() => {
+    if (token) {
+      console.log(token);
+    }
+  }, [token]);
+
   return (
     <div className="containerSignUp">
       <div className="heading">Sign In</div>
-      <Form className="form">
+      <Form className="form" onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Control
             required
@@ -16,6 +53,7 @@ export const SignIn = () => {
             type="email"
             name="email"
             id="email"
+            onChange={handleChange}
             placeholder="E-mail"
           />
         </Form.Group>
@@ -26,6 +64,7 @@ export const SignIn = () => {
             type="password"
             name="password"
             id="password"
+            onChange={handleChange}
             placeholder="Password"
           />
         </Form.Group>
