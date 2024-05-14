@@ -1,11 +1,10 @@
-import $api from './index'
+import $api from './index';
 import axios from 'axios';
-
-const API_URL = 'http://localhost:3001/api'
-
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-//файл із запитами аксіоса
+const API_URL = 'http://localhost:3001/api';
+
+// Функції з використанням $api для запитів
 export const signIn = async ({ email, password }) => {
     try {
         const response = await $api.post('/signin', { email, password });
@@ -36,45 +35,66 @@ export const signOutUser = async () => {
     }
 };
 
-export const getUser = async () => {
+export const getUserInfo = async () => {
     try {
-        const response = await $api.post('/profile');
+        const response = await $api.get('/profile');
+        console.log('Response:', response);
         return response.data;
     } catch (error) {
-        console.error('Error getUser:', error);
+        console.error('Error getting user info:', error.message);
         throw error;
     }
 };
 
-export const chechAuth = async () => {
+export const enrollUserInCourse = async (courseId) => {
     try {
-        const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true })
+        const response = await $api.post(`/enroll/?id=${courseId}`);
         return response.data;
     } catch (error) {
+        console.error('Error enrolling in course:', error);
         throw error;
     }
-}
+};
 
-//курси
+export const unenrollUserInCourse = async (courseId) => {
+    try {
+        const response = await $api.post(`/unenroll/?id=${courseId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error unenrolling from course:', error);
+        throw error;
+    }
+};
+
+export const checkAuth = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error(`Refresh error: ${error}`);
+        throw new Error('Refresh error');
+    }
+};
+
 export const getCourses = createAsyncThunk(
     'courses/allcourses', async () => {
         try {
             const response = await $api.get('/courses');
             return response.data;
         } catch (error) {
-            console.error("Logout error:", error);
+            console.error("Error getting courses:", error);
             throw error;
         }
     }
 )
 
 export const getCourseId = createAsyncThunk(
-    'courses/getCourseId', async () => {
+    'courses/getCourseId', async (id) => {
         try {
-            const response = await $api.get('/courses/id/:id');
+            const response = await $api.get(`/courses/id/${id}`);
             return response.data;
         } catch (error) {
-            console.error("Logout error:", error);
+            console.error("Error getting course by ID:", error);
             throw error;
         }
     }

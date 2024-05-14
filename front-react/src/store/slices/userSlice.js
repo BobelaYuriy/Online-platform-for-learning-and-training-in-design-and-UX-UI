@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { signUp, signIn, signOutUser } from '../../network/network';
+import { signUp, signIn, signOutUser, getUserInfo } from '../../network/network';
 import { userApi } from "../../services/userServices";
+
 const initialState = {
   userData: null,
   isAuthorized: false,
@@ -37,6 +38,17 @@ export const signOut = createAsyncThunk("user/signOut", async (userData) => {
   }
 });
 
+export const getUser = createAsyncThunk("user/getUser", async () => {
+  try {
+    const response = await getUserInfo();
+    return response;
+  } catch (error) {
+    console.error("Error signing up:", error);
+    throw error;
+  }
+});
+
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -53,18 +65,23 @@ const userSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(signInUser.fulfilled, (state, action) => {
-      state.isAuthorized = true;
-      state.token = action.payload.accessToken;
-    }),
-      builder.addCase(signUpUser.fulfilled, (state, action) => {
+    builder
+      .addCase(signInUser.fulfilled, (state, action) => {
         state.isAuthorized = true;
         state.token = action.payload.accessToken;
-      }),
-      builder.addCase(signOut.fulfilled, (state, action) => {
+      })
+      .addCase(signUpUser.fulfilled, (state, action) => {
+        state.isAuthorized = true;
+        state.token = action.payload.accessToken;
+      })
+      .addCase(signOut.fulfilled, (state, action) => {
         state.isAuthorized = false;
         state.userData = null;
         state.token = null;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.userData = action.payload;
+        state.token = action.payload.accessToken;
       });
   },
 });

@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MyButton } from "../UI/button/MyButton";
 import Search from "../UI/search/search";
-import Avatar from "../UI/Avatar/Avatar";
 import { useSelector } from "react-redux";
 import { signOut } from "../../store/slices/userSlice";
 import "./Header.css";
 import { useDispatch } from "react-redux";
 
 export const Header = () => {
-  const { isAuthorized } = useSelector((state) => state.user);
+  const { isAuthorized, userInfo } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -80,7 +79,7 @@ export const Header = () => {
                     Sign out
                   </MyButton>
                 </Link>
-                {isAuthorized && <BurgerMenu />}
+                {isAuthorized && <BurgerMenu userData={userInfo} />}
               </Nav.Item>
             )}
           </Nav.Item>

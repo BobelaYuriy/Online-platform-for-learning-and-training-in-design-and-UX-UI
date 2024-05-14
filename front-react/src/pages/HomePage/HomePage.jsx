@@ -5,9 +5,15 @@ import { testReducer } from "../../store/slices/testReducer";
 
 export const HomePage = () => {
   const { count } = useSelector((state) => state.test);
+
+  const { token } = useSelector((state) => state.user);
+
   const { increment } = testReducer.actions; // Використовуйте екшени через testReducer.actions
   const dispatch = useDispatch();
 
+  if (token) {
+    console.log(localStorage.getItem("persist:user"));
+  }
   return (
     <div>
       <div className="container rounded p-4 bg-light">

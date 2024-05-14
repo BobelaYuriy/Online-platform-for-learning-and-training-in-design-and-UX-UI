@@ -1,23 +1,22 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'; // Імпорт createApi з Redux Toolkit
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { customBaseQuery } from './CustomBaseQuery';
 
 export const courseApi = createApi({
-    reducerPath: 'courseAPI',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api' }),
+    reducerPath: 'api',
+    baseQuery: customBaseQuery,
     endpoints: (build) => ({
         getCourses: build.query({
             query: (limit) => ({
                 url: '/courses',
-                params: {
-                    limit: limit
-                }
-            })
+                params: { limit },
+            }),
         }),
-        getCourseId: build.query(
-            {
-                query: (id) => ({
-                    url: `/courses/id/${id}`
-                })
-            }
-        )
-    })
-})
+        getCourseId: build.query({
+            query: (id) => ({
+                url: `/courses/id/${id}`,
+            }),
+        }),
+    }),
+});
+
+export const { useGetCoursesQuery, useGetCourseIdQuery } = courseApi;

@@ -4,6 +4,12 @@ import userReducer from './slices/userSlice';
 import {
     persistStore,
     persistReducer,
+    REHYDRATE,
+    FLUSH,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
 } from 'redux-persist';
 import testReducer from './slices/testReducer';
 import coursesReducer from './slices/coursesReducer';
@@ -13,7 +19,6 @@ const persistConfig = {
     key: 'user',
     storage,
 };
-
 const persistedAuthReducer = persistReducer(persistConfig, userReducer);
 
 const store = configureStore({
@@ -26,7 +31,9 @@ const store = configureStore({
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: false
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+            }
         }).concat(courseApi.middleware, userApi.middleware),
 });
 

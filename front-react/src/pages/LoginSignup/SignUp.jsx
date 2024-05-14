@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { signUpUser } from "../../store/slices/userSlice"; // Import signUpUser from userSlice
 
 export const SignUp = () => {
-  const [signUp, { isLoading, isError }] = userApi.useSignUpMutation();
   const dispatch = useDispatch();
 
   const navigate = useNavigate();

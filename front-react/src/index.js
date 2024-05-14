@@ -6,15 +6,23 @@ import "./styles/reset.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles/common.css"
 import { Provider } from 'react-redux';
-import { store } from './store/store'
+import { store, persistor } from './store/store'
+import { PersistGate } from 'redux-persist/integration/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const client = new QueryClient();
 root.render(
+  <PersistGate persistor={persistor}>
+    <QueryClientProvider client={client}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
 
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+      </Provider>
+    </QueryClientProvider>
 
-  </Provider>
+  </PersistGate>
+
 
 )

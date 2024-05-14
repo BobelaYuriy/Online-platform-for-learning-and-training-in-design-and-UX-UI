@@ -3,6 +3,7 @@ import { Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom"; // Додайте імпорт Link з react-router-dom
 import { MyButton } from "../UI/button/MyButton";
 import { useNavigate } from "react-router-dom";
+import "./CourseCard.css";
 export const CourseCard = ({ course }) => {
   const navigate = useNavigate();
 

@@ -1,37 +1,35 @@
+// BurgerMenu.js
 import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../UI/Avatar/Avatar";
 
-export const BurgerMenu = () => {
+export const BurgerMenu = ({ userData }) => {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleToggle = () => setShowMenu(!showMenu);
 
   return (
     <>
-      {/* Використовуємо кнопку з ролью кнопки замість компонента аватара */}
       <button
         className="avatar-button"
         onClick={handleToggle}
         style={{
-          border: "none", // Видаляємо рамку
-          background: "transparent", // Прозорий фон
-          padding: 0, // Видаляємо відступи
-          cursor: "pointer", // Змінюємо вигляд курсору на палець
+          border: "none",
+          background: "transparent",
+          padding: 0,
+          cursor: "pointer",
         }}
       >
+        {/* Передаємо дані користувача в Avatar */}
         <Avatar
-          imageSrc={
-            "https://i.pinimg.com/564x/96/b8/7e/96b87ed46354a6bcedaef2799b6553c3.jpg"
-          }
+          userData={userData}
           size="medium"
           style={{
             borderRadius: "50%", // Заокруглюємо краї аватара
           }}
         />
       </button>
-      {/* Offcanvas для відображення меню */}
       <Offcanvas
         show={showMenu}
         onHide={() => setShowMenu(false)}
@@ -42,23 +40,41 @@ export const BurgerMenu = () => {
           <Offcanvas.Title>Menu</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li>
-              <Link to="/profile" style={{ textDecoration: "none" }}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/userCourses" style={{ textDecoration: "none" }}>
-                About
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" style={{ textDecoration: "none" }}>
-                Contact
-              </Link>
-            </li>
-          </ul>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "left",
+            }}
+          >
+            <Avatar
+              userData={userData}
+              size="large"
+              style={{
+                borderRadius: "50%", // Заокруглюємо краї аватара
+              }}
+            />
+            <ul
+              className="ulSans"
+              style={{ listStyleType: "none", padding: 0 }}
+            >
+              <li>
+                <Link to="/profile" style={{ textDecoration: "none" }}>
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link to="/userCourses" style={{ textDecoration: "none" }}>
+                  Courses
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" style={{ textDecoration: "none" }}>
+                  Statistic
+                </Link>
+              </li>
+            </ul>
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </>

@@ -2,3 +2,10 @@ body {
   margin: 0; /* Видаляє відступи по замовчуванню */
   background: rgb(22, 11, 21);
 }
+.ulSans {
+  font-family: "Instrument Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 16;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
