@@ -38,6 +38,10 @@ export const SignUp = () => {
     if (isAuthorized) {
       navigate("/");
       console.log(userData);
+      console.log(
+        "Stored token after signup:",
+        localStorage.getItem("persist:user")
+      );
     }
   }, [isAuthorized, navigate]);
 
@@ -80,8 +84,6 @@ export const SignUp = () => {
         </Form.Group>
         <MyButton type="submit">Sign up</MyButton>
       </Form>
-      {isLoading && <h1>Іде загрузка...</h1>}
-      {isError && <h1>{isError}</h1>}
     </div>
   );
 };

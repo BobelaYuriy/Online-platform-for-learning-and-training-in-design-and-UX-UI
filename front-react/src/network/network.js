@@ -4,10 +4,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_URL = 'http://localhost:3001/api';
 
-// Функції з використанням $api для запитів
 export const signIn = async ({ email, password }) => {
     try {
         const response = await $api.post('/signin', { email, password });
+        const { accessToken } = response.data;
+
+        localStorage.setItem("persist:user", JSON.stringify({ accessToken }));
         return response.data;
     } catch (error) {
         console.error('Error signing in:', error);
@@ -18,12 +20,18 @@ export const signIn = async ({ email, password }) => {
 export const signUp = async ({ email, username, password }) => {
     try {
         const response = await $api.post('/signup', { email, username, password });
+        console.log("Sign up response:", response.data); // Додайте цей рядок для перевірки
+
+        const { accessToken } = response.data.userData;
+        localStorage.setItem("persist:user", JSON.stringify({ accessToken }));
         return response.data;
     } catch (error) {
         console.error('Error signing up:', error);
         throw error;
     }
 }
+
+
 
 export const signOutUser = async () => {
     try {
@@ -69,7 +77,7 @@ export const unenrollUserInCourse = async (courseId) => {
 export const checkAuth = async () => {
     try {
         const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
-        return response.data;
+        return response;
     } catch (error) {
         console.error(`Refresh error: ${error}`);
         throw new Error('Refresh error');

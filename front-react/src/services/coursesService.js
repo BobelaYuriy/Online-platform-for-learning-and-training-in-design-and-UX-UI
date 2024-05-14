@@ -16,7 +16,17 @@ export const courseApi = createApi({
                 url: `/courses/id/${id}`,
             }),
         }),
+        enrollCourse: build.mutation({
+            query: (courseId) => ({
+                url: `/courses/enroll/id/${courseId}`,
+                method: 'POST',
+            }),
+        }),
+        query: (courseId) => ({
+            url: `/courses/unenroll/id/${courseId}`,
+            method: 'POST',
+        }),
     }),
-});
+})
 
-export const { useGetCoursesQuery, useGetCourseIdQuery } = courseApi;
+

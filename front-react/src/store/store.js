@@ -4,8 +4,8 @@ import userReducer from './slices/userSlice';
 import {
     persistStore,
     persistReducer,
-    REHYDRATE,
     FLUSH,
+    REHYDRATE,
     PAUSE,
     PERSIST,
     PURGE,
@@ -15,10 +15,12 @@ import testReducer from './slices/testReducer';
 import coursesReducer from './slices/coursesReducer';
 import { courseApi } from '../services/coursesService';
 import { userApi } from '../services/userServices';
+
 const persistConfig = {
     key: 'user',
     storage,
 };
+
 const persistedAuthReducer = persistReducer(persistConfig, userReducer);
 
 const store = configureStore({

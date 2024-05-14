@@ -16,7 +16,6 @@ const baseQuery = fetchBaseQuery({
         console.error("Error parsing stored data:", e);
       }
     }
-
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     } else {
@@ -49,7 +48,7 @@ export const customBaseQuery = async (args, api, extraOptions) => {
         console.error("User is not authorized", error);
         document.location.replace("/signin");
         localStorage.setItem(
-          "persist:auth",
+          "persist:user",
           JSON.stringify({ isAuthorized: false, token: null, userData: null })
         );
         throw new Error("Refresh token error");

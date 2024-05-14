@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Card, Button, Accordion } from "react-bootstrap";
+import { Container, Row, Col, Card, Accordion } from "react-bootstrap";
 import { courseApi } from "../../services/coursesService";
 import { useParams } from "react-router-dom";
 import { MyButton } from "../../components/UI/button/MyButton";
 
 const DetailsCoursePage = () => {
   const { id } = useParams();
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   const {
     data: course,
@@ -15,8 +16,17 @@ const DetailsCoursePage = () => {
 
   const [selectedLesson, setSelectedLesson] = useState(null);
 
-  const handleLessonClick = (lesson) => {
-    setSelectedLesson(lesson === selectedLesson ? null : lesson);
+  // Використовуйте useEnrollCourseMutation з RTK Query
+  const [enrollCourse] = courseApi.useEnrollCourseMutation();
+
+  const handleEnrollNowClick = async () => {
+    // Викличте мутацію для ендпоінта enrollCourse
+    try {
+      await enrollCourse(id).unwrap();
+      setIsEnrolled(true);
+    } catch (error) {
+      console.error("Error enrolling course:", error);
+    }
   };
 
   if (isLoading)
@@ -59,7 +69,11 @@ const DetailsCoursePage = () => {
               <Col md={4}>
                 <Card.Img variant="top" src={course.image} />
                 <Card.Body>
-                  <MyButton variant="primary">Enroll Now</MyButton>
+                  {!course.isEnrolled && (
+                    <MyButton variant="primary" onClick={handleEnrollNowClick}>
+                      Enroll Now
+                    </MyButton>
+                  )}
                 </Card.Body>
               </Col>
             </Row>

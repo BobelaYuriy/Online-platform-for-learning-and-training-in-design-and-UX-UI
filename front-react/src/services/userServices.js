@@ -4,6 +4,7 @@ import { customBaseQuery } from './CustomBaseQuery';
 export const userApi = createApi({
     reducerPath: 'userApi',
     baseQuery: customBaseQuery,
+    tagTypes: ['User'],
     endpoints: (build) => ({
         getUser: build.query({
             query: () => '/profile', // Припускаю, що це правильний шлях для отримання даних про користувача

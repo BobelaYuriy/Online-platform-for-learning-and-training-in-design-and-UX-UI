@@ -11,6 +11,7 @@ const initialState = {
 export const signUpUser = createAsyncThunk("user/signUp", async (userData) => {
   try {
     const response = await signUp(userData);
+    console.log(response)
     return response;
   } catch (error) {
     console.error("Error signing up:", error);
@@ -72,7 +73,7 @@ const userSlice = createSlice({
       })
       .addCase(signUpUser.fulfilled, (state, action) => {
         state.isAuthorized = true;
-        state.token = action.payload.accessToken;
+        state.token = action.payload.userData.accessToken;
       })
       .addCase(signOut.fulfilled, (state, action) => {
         state.isAuthorized = false;
