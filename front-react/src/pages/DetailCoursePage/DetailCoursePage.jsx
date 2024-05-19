@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { MyButton } from "../../components/UI/button/MyButton";
 
 const DetailsCoursePage = () => {
-  const { id } = useParams();
+  const { id, category } = useParams();
   const navigate = useNavigate();
   const [isEnrolled, setIsEnrolled] = useState(false);
 
@@ -17,7 +17,6 @@ const DetailsCoursePage = () => {
 
   const [selectedLesson, setSelectedLesson] = useState(null);
 
-  // Використовуйте useEnrollCourseMutation з RTK Query
   const [enrollCourse] = courseApi.useEnrollCourseMutation();
   const [unenrollCourse] = courseApi.useUnenrollCourseMutation();
 
@@ -41,12 +40,12 @@ const DetailsCoursePage = () => {
       await unenrollCourse(id).unwrap();
       setIsEnrolled(false);
     } catch (error) {
-      console.error("Error enrolling course:", error);
+      console.error("Error unenrolling course:", error);
     }
   };
 
   const handleGoToLessonsClick = () => {
-    navigate(`/coursesuiux/id/${id}/lessons`);
+    navigate(`/courses/${category}/id/${id}/lessons`);
   };
 
   if (isLoading)

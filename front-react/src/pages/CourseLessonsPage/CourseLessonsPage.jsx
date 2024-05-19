@@ -9,10 +9,10 @@ import {
 } from "react-bootstrap";
 import { courseApi } from "../../services/coursesService";
 import { useParams, useNavigate } from "react-router-dom";
-import "./CourseLessonsPage.css"; // Імпорт стилів
+import "./CourseLessonsPage.css"; // Import styles
 
 const CourseLessonsPage = () => {
-  const { id } = useParams();
+  const { id, category } = useParams(); // Destructure category from params
   const navigate = useNavigate();
   const [completedLessons, setCompletedLessons] = useState([]);
 
@@ -27,12 +27,11 @@ const CourseLessonsPage = () => {
       const savedCompletedLessons =
         JSON.parse(localStorage.getItem(`completedLessons-${id}`)) || [];
       setCompletedLessons(savedCompletedLessons);
-      console.log(course);
     }
   }, [course, id]);
 
   const handleGoToLessonClick = (lessonId) => {
-    navigate(`/coursesuiux/id/${id}/lessons/${lessonId}`);
+    navigate(`/courses/${category}/id/${id}/lessons/${lessonId}`); // Use dynamic category
   };
 
   if (isLoading)
@@ -48,7 +47,6 @@ const CourseLessonsPage = () => {
       <Row>
         <Col>
           <h2 className="course-title">{course.title} - Lessons</h2>
-          {/* Градієнтний прогрес-бар */}
           <div className="custom-progress-bar">
             <ProgressBar
               now={course.progress}

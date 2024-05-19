@@ -1,11 +1,12 @@
 import React from "react";
 import { Card, Col } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Додайте імпорт Link з react-router-dom
+import { useNavigate, useParams } from "react-router-dom"; // Updated import to include useParams
 import { MyButton } from "../UI/button/MyButton";
-import { useNavigate } from "react-router-dom";
 import "./CourseCard.css";
+
 export const CourseCard = ({ course }) => {
   const navigate = useNavigate();
+  const { category } = useParams(); // Get category from URL params
 
   return (
     <Col xs={12} md={6} lg={4} xl={3}>
@@ -19,7 +20,7 @@ export const CourseCard = ({ course }) => {
         >
           <Card.Img
             variant="top"
-            src={course.image} // Потрібно вказати шлях до зображення у властивості src
+            src={course.image} // Specify the image path
             style={{
               width: "100%",
               height: "auto",
@@ -33,7 +34,7 @@ export const CourseCard = ({ course }) => {
         </Card.Body>
         <MyButton
           style={{ width: "200px" }}
-          onClick={() => navigate(`/coursesuiux/id/${course._id}`)}
+          onClick={() => navigate(`/courses/${category}/id/${course._id}`)} // Use dynamic category
         >
           To course
         </MyButton>

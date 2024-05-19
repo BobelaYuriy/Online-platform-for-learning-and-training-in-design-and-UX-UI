@@ -7,9 +7,9 @@ export const courseApi = createApi({
     tagTypes: ['Course'],
     endpoints: (build) => ({
         getCourses: build.query({
-            query: (limit) => ({
-                url: '/courses',
-                params: { limit },
+            query: ({ limit, category }) => ({
+                url: `/courses/${category}`,
+
             }),
         }),
         getCourseId: build.query({
@@ -38,7 +38,6 @@ export const courseApi = createApi({
                 url: `/courses/unenroll/id/${courseId}`,
                 method: 'POST',
             }),
-
         }),
         submitUserAnswers: build.mutation({
             query: ({ courseId, lessonIndex, userAnswers }) => ({

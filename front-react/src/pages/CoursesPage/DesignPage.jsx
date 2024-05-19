@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CourseCard } from "../../components/CourseCard/CourseCard";
 import { Container, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { getCourses } from "../../network/network";
+import { useParams } from "react-router-dom";
 import { courseApi } from "../../services/coursesService";
 
 const DesignPage = () => {
-  const { data: courses } = courseApi.useGetCoursesQuery(10);
+  const { category } = useParams();
+  const {
+    data: courses,
+    isLoading,
+    isError,
+  } = courseApi.useGetCoursesQuery({
+    limit: 10,
+    category,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching courses</div>;
+
   return (
     <Container>
       <div className="container rounded p-4 bg-light">
-        <h1>Courses on UX/UI Design</h1>
+        <h1>Courses on {category}</h1>
       </div>
       <Row className="mt-2">
         {(courses || []).map((course) => (

@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MyButton } from "../UI/button/MyButton";
 import Search from "../UI/search/search";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../../store/slices/userSlice";
-import "./Header.css";
-import { useDispatch } from "react-redux";
 import { userApi } from "../../services/userServices";
+import "./Header.css";
 
 export const Header = () => {
   const { isAuthorized } = useSelector((state) => state.user);
   const { data: userData } = userApi.useGetUserQuery();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     dispatch(signOut());
+  };
+
+  const handleCategoryClick = (category) => {
+    navigate(`/courses/${category}`);
   };
 
   return (
@@ -34,13 +38,19 @@ export const Header = () => {
             menuVariant="dark"
             className="sans"
           >
-            <NavDropdown.Item href="#action/3.1">
+            <NavDropdown.Item
+              onClick={() => handleCategoryClick("graphicdesign")}
+            >
               Graphic design
             </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="course1">Web design</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => handleCategoryClick("webdesign")}>
+              Web design
+            </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="courseuiux">UX&UI design</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => handleCategoryClick("uiux")}>
+              UX&UI design
+            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
 
