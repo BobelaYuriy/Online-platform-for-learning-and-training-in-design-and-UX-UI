@@ -8,10 +8,11 @@ import { useSelector } from "react-redux";
 import { signOut } from "../../store/slices/userSlice";
 import "./Header.css";
 import { useDispatch } from "react-redux";
+import { userApi } from "../../services/userServices";
 
 export const Header = () => {
-  const { isAuthorized, userInfo } = useSelector((state) => state.user);
-
+  const { isAuthorized } = useSelector((state) => state.user);
+  const { data: userData } = userApi.useGetUserQuery();
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
@@ -79,7 +80,7 @@ export const Header = () => {
                     Sign out
                   </MyButton>
                 </Link>
-                {isAuthorized && <BurgerMenu userData={userInfo} />}
+                {isAuthorized && <BurgerMenu userData={userData} />}
               </Nav.Item>
             )}
           </Nav.Item>

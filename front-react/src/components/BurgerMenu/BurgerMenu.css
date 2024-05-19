@@ -1,0 +1,15 @@
+.burger-menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content */
+}
+
+.ulSans {
+  list-style-type: none;
+  padding: 0;
+  text-align: center; /* Center the text */
+}
+
+.ulSans li {
+  margin: 10px 0; /* Add some spacing between the links */
+}

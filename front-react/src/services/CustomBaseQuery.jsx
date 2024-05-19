@@ -1,25 +1,16 @@
-// customBaseQuery.js
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { checkAuth } from "../network/network"; // Make sure to adjust the import path to your `checkAuth` function
+import { checkAuth } from "../network/network";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:3001/api",
-  prepareHeaders: (headers) => {
-    const storedData = localStorage.getItem("persist:user");
-    let token = null;
+  prepareHeaders: (headers, { getState }) => {
+    const { user } = getState(); // Assuming your slice name is `user`
+    const token = user.token;
 
-    if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData);
-        token = parsedData?.token ? parsedData.token.replace(/"/g, "") : null; // Remove quotes from token if present
-      } catch (e) {
-        console.error("Error parsing stored data:", e);
-      }
-    }
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     } else {
-      console.warn("No token found in localStorage");
+      console.warn("No token found in state");
     }
 
     return headers;
@@ -35,14 +26,22 @@ export const customBaseQuery = async (args, api, extraOptions) => {
       originalRequest._isRetry = true;
       try {
         const response = await checkAuth();
+        console.log("Token refreshed:", response);
+        const { accessToken } = response.data;
+
+        // Update token in local storage and state
         localStorage.setItem(
           "persist:user",
-          JSON.stringify({ token: response.data.accessToken })
+          JSON.stringify({
+            ...JSON.parse(localStorage.getItem("persist:user")),
+            token: accessToken,
+          })
         );
-        originalRequest.headers.set(
-          "Authorization",
-          `Bearer ${response.data.accessToken}`
-        );
+
+        // Update headers with new token
+        const newHeaders = new Headers(originalRequest.headers);
+        newHeaders.set("Authorization", `Bearer ${accessToken}`);
+        originalRequest.headers = newHeaders;
         result = await baseQuery(originalRequest, api, extraOptions);
       } catch (error) {
         console.error("User is not authorized", error);

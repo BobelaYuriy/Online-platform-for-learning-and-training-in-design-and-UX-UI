@@ -1,8 +1,8 @@
-// BurgerMenu.js
 import React, { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Avatar from "../UI/Avatar/Avatar";
+import "./BurgerMenu.css";
 
 export const BurgerMenu = ({ userData }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,9 +19,9 @@ export const BurgerMenu = ({ userData }) => {
           background: "transparent",
           padding: 0,
           cursor: "pointer",
+          marginRight: "10px",
         }}
       >
-        {/* Передаємо дані користувача в Avatar */}
         <Avatar
           userData={userData}
           size="medium"
@@ -40,13 +40,7 @@ export const BurgerMenu = ({ userData }) => {
           <Offcanvas.Title>Menu</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "left",
-            }}
-          >
+          <div className="burger-menu-content">
             <Avatar
               userData={userData}
               size="large"
@@ -54,10 +48,7 @@ export const BurgerMenu = ({ userData }) => {
                 borderRadius: "50%", // Заокруглюємо краї аватара
               }}
             />
-            <ul
-              className="ulSans"
-              style={{ listStyleType: "none", padding: 0 }}
-            >
+            <ul className="ulSans">
               <li>
                 <Link to="/profile" style={{ textDecoration: "none" }}>
                   Profile

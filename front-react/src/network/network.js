@@ -31,8 +31,6 @@ export const signUp = async ({ email, username, password }) => {
     }
 }
 
-
-
 export const signOutUser = async () => {
     try {
         const response = await $api.post('/signout');
@@ -54,29 +52,19 @@ export const getUserInfo = async () => {
     }
 };
 
-export const enrollUserInCourse = async (courseId) => {
-    try {
-        const response = await $api.post(`/enroll/?id=${courseId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error enrolling in course:', error);
-        throw error;
-    }
-};
-
-export const unenrollUserInCourse = async (courseId) => {
-    try {
-        const response = await $api.post(`/unenroll/?id=${courseId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error unenrolling from course:', error);
-        throw error;
-    }
-};
-
 export const checkAuth = async () => {
     try {
         const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
+        return response;
+    } catch (error) {
+        console.error(`Refresh error: ${error}`);
+        throw new Error('Refresh error');
+    }
+};
+
+export const updateProfile = async () => {
+    try {
+        const response = await $api.get(`${API_URL}/refresh`, { withCredentials: true });
         return response;
     } catch (error) {
         console.error(`Refresh error: ${error}`);

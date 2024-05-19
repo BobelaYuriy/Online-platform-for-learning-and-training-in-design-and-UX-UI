@@ -1,22 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "react-bootstrap/Button";
-import { testReducer } from "../../store/slices/testReducer";
+import { courseApi } from "../../services/coursesService";
+import ArticleCard from "../../components/ArticleCard/ArticleCard";
+import { Card } from "react-bootstrap";
 
 export const HomePage = () => {
-  const { count } = useSelector((state) => state.test);
+  const {
+    data: articles,
+    isLoading,
+    error,
+  } = courseApi.useGetAllArticlesQuery();
 
-  const { token } = useSelector((state) => state.user);
+  if (isLoading) return <div>Loading articles...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-  const { increment } = testReducer.actions; // Використовуйте екшени через testReducer.actions
-  const dispatch = useDispatch();
-
-  if (token) {
-    console.log(localStorage.getItem("persist:user"));
-  }
   return (
     <div>
-      <div className="container rounded p-4 bg-light">
+      <div className="container rounded p-4 bg-light mt-2">
         <div className="text-center">
           <h1 className="mb-4">Design Online Platform</h1>
           <p className="lead">
@@ -27,21 +27,16 @@ export const HomePage = () => {
           </p>
         </div>
       </div>
-      <div>
-        <h1 className="text-center text-white" style={{ fontSize: "6rem" }}>
-          {count}
-        </h1>
-        <div className="d-flex justify-content-center mt-3">
-          <Button
-            onClick={() => dispatch(increment(5))} // Використовуйте increment з testReducer.actions
-            variant="secondary"
-            size="lg"
-            className="btn-xl me-3"
-          >
-            Add cash
-          </Button>
+      <h1 className="text-center text-white mt-2" style={{ fontSize: "3rem" }}>
+        Posts
+      </h1>
+      <Card className="w-75 mx-auto rounded">
+        <div className="d-flex flex-wrap justify-content-center mt-3">
+          {articles.map((article) => (
+            <ArticleCard key={article.id} {...article} />
+          ))}
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

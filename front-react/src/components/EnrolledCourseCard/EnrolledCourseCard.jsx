@@ -25,7 +25,7 @@ export const EnrolledCourseCard = ({ enrolledCourse }) => {
               navigate(`/coursesuiux/id/${enrolledCourse.courseId}`)
             }
           >
-            Continue Course
+            To course
           </MyButton>
         </Card.Body>
       </Card>

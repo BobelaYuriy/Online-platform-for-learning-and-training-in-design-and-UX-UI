@@ -11,7 +11,7 @@ const initialState = {
 export const signUpUser = createAsyncThunk("user/signUp", async (userData) => {
   try {
     const response = await signUp(userData);
-    console.log(response)
+    console.log(response);
     return response;
   } catch (error) {
     console.error("Error signing up:", error);
@@ -49,7 +49,6 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   }
 });
 
-
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -60,11 +59,12 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.userData = action.payload;
     },
-    cleatUser: (state, action) => {
-      state.userData = action.payload;
-    }
+    clearUser: (state) => {
+      state.userData = null;
+      state.token = null;
+      state.isAuthorized = false;
+    },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(signInUser.fulfilled, (state, action) => {
@@ -75,16 +75,19 @@ const userSlice = createSlice({
         state.isAuthorized = true;
         state.token = action.payload.userData.accessToken;
       })
-      .addCase(signOut.fulfilled, (state, action) => {
+      .addCase(signOut.fulfilled, (state) => {
         state.isAuthorized = false;
         state.userData = null;
         state.token = null;
       })
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.userData = action.payload;
-        state.token = action.payload.accessToken;
-      });
+      .addMatcher(
+        userApi.endpoints.getUser.matchFulfilled,
+        (state, action) => {
+          state.userData = action.payload;
+        }
+      );
   },
 });
 
+export const { setToken, setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

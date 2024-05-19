@@ -1,0 +1,67 @@
+.course-lessons-container {
+  background-color: #ffffff;
+  color: #6a00ff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.course-title {
+  color: #6a00ff;
+  margin-bottom: 20px;
+}
+
+.course-lesson-card {
+  background: none; /* Remove background gradient */
+  color: #000000; /* Text dark */
+  border: 5px solid
+    linear-gradient(45deg, rgb(84, 16, 211) 0%, rgb(209, 18, 200) 100%); /* Thick gradient border */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+.course-lesson-card .card-title,
+.course-lesson-card .card-text {
+  color: #000000; /* Текст темний */
+}
+
+.course-lesson-card .btn {
+  color: #6a00ff;
+}
+
+.course-lesson-card .btn-primary {
+  background-color: rgb(255, 255, 255);
+  border-color: #23005a;
+}
+
+.course-lesson-card .btn-primary:hover {
+  background-color: #4500b3;
+  border-color: #4500b3;
+}
+
+.course-lesson-card .btn-success {
+  background-color: #00ff95;
+  border-color: #00ff95;
+}
+
+.course-lesson-card .btn-outline-light {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.course-lesson-card .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #6a00ff;
+}
+
+.mb-3,
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.custom-progress-bar .progress-bar {
+  background: linear-gradient(
+    45deg,
+    rgb(84, 16, 211) 0%,
+    rgb(209, 18, 200) 100%
+  );
+}

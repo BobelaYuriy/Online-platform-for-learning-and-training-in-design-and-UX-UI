@@ -1,12 +1,12 @@
 .profile-container {
-  max-width: 900px;
-  margin: auto;
+  max-width: 1200px;
 }
 
 .profile-header {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 5px;
+  background: linear-gradient(45deg, #7f00ff, #e100ff);
+  border: none;
+  border-radius: 10px;
+  color: white;
 }
 
 .nickname {
@@ -14,27 +14,48 @@
   font-weight: bold;
 }
 
+.user-stats {
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
 .profile-section {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
-  margin-top: 20px;
+  background: #f8f9fa;
+  border: none;
+  border-radius: 10px;
 }
 
 .section-heading {
   font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-weight: bold;
+  color: #343a40;
 }
 
-.courses-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #7f00ff, #e100ff) !important;
 }
 
-.spinner-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+.text-white {
+  color: white !important;
+}
+
+.nickname-input {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.profile-header {
+  position: relative;
+}
+
+.profile-header .btn-secondary {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.profile-header .btn-primary {
+  position: absolute;
+  top: 15px;
+  right: 100px;
 }
