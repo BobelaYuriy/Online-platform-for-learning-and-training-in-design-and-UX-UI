@@ -22,7 +22,9 @@ export const EnrolledCourseCard = ({ enrolledCourse }) => {
           <MyButton
             className="continue-button"
             onClick={() =>
-              navigate(`/coursesuiux/id/${enrolledCourse.courseId}`)
+              navigate(
+                `/courses/${enrolledCourse.category}/id/${enrolledCourse.courseId}`
+              )
             }
           >
             To course
