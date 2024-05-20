@@ -62,9 +62,6 @@ const CourseLessonsPage = () => {
                     <Col>
                       <Card.Title>{lesson.title}</Card.Title>
                       <Card.Text>{lesson.description}</Card.Text>
-                      <Card.Text>
-                        Completed Tests: {lesson.completedTests}
-                      </Card.Text>
                     </Col>
                     <Col md="auto">
                       <Button

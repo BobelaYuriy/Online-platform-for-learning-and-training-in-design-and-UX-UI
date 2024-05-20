@@ -47,8 +47,11 @@ export const courseApi = createApi({
             }),
         }),
         getAllArticles: build.query({
-            query: () => ({
+            query: (search) => ({
                 url: '/articles',
+                params: {
+                    search, // Pass the search parameter to the query
+                },
             }),
         }),
         getArticleById: build.query({

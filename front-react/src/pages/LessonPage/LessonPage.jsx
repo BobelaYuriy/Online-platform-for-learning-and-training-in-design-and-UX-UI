@@ -1,30 +1,65 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Accordion, Card, Container, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Accordion, Card, Container } from "react-bootstrap";
 import YouTube from "react-youtube";
-import { courseApi } from "../../services/coursesService"; // Ensure this path is correct
+import { courseApi } from "../../services/coursesService";
+import { userApi } from "../../services/userServices"; // Імпортуємо userApi
 import "./LessonPage.css";
 import Test from "../../components/Test/Test";
 import { MyButton } from "../../components/UI/button/MyButton";
 
 const LessonPage = () => {
-  const { id, lessonIndex } = useParams();
+  const { id, lessonIndex, category } = useParams();
+  const navigate = useNavigate();
   const {
     data: lesson,
-    isLoading,
-    isError,
+    isLoading: isLessonLoading,
+    isError: isLessonError,
   } = courseApi.useGetLessonQuery({
     courseId: id,
     lessonIndex: lessonIndex,
   });
 
-  const [showVideo, setShowVideo] = useState(true);
-  const [showTest, setShowTest] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
   const [submitUserAnswers] = courseApi.useSubmitUserAnswersMutation();
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = userApi.useGetUserQuery(); // Отримуємо дані користувача через userApi
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching lesson data</div>;
+  useEffect(() => {
+    // Перевіряємо, чи є дані користувача та уроку перед виконанням ефекту
+    if (userData && lesson) {
+      // Знаходимо інформацію про тест для поточного уроку в масиві enrolledCourses користувача
+      const enrolledCourse = userData.enrolledCourses.find(
+        (course) => course.courseId === id
+      );
+      if (enrolledCourse) {
+        const lessonInfo = enrolledCourse.lessons.find(
+          (lesson) => lesson._id === lessonIndex
+        );
+        if (lessonInfo && lessonInfo.testInfo) {
+          // Якщо є інформація про тест, оновлюємо стан користувача
+          setUserAnswers(lessonInfo.testInfo.userAnswers);
+        }
+      }
+    }
+  }, [userData, lesson]);
+
+  const handleTestSubmit = async () => {
+    try {
+      await submitUserAnswers({ courseId: id, lessonIndex, userAnswers });
+      alert("Answers submitted successfully!");
+      navigate(`/courses/${category}/id/${id}/lessons`);
+    } catch (error) {
+      console.error("Failed to submit answers", error);
+      alert("Failed to submit answers");
+    }
+  };
+
+  if (isLessonLoading || isUserLoading) return <div>Loading...</div>;
+  if (isLessonError || isUserError) return <div>Error fetching data</div>;
 
   const getYouTubeVideoId = (url) => {
     const regExp =
@@ -34,16 +69,6 @@ const LessonPage = () => {
   };
 
   const videoId = getYouTubeVideoId(lesson.video);
-
-  const handleTestSubmit = async () => {
-    try {
-      await submitUserAnswers({ courseId: id, lessonIndex, userAnswers });
-      alert("Answers submitted successfully!");
-    } catch (error) {
-      console.error("Failed to submit answers", error);
-      alert("Failed to submit answers");
-    }
-  };
 
   return (
     <div>
@@ -69,11 +94,26 @@ const LessonPage = () => {
                 <Accordion.Item eventKey="1">
                   <Accordion.Header>Test</Accordion.Header>
                   <Accordion.Body>
-                    <Test
-                      questions={lesson.tests.questions}
-                      setUserAnswers={setUserAnswers}
-                    />
-                    <MyButton onClick={handleTestSubmit}>Submit</MyButton>
+                    {lesson.testInfo ? (
+                      <div>
+                        <p>
+                          You have already completed this test. Here are your
+                          results:
+                        </p>
+                        <p>
+                          Score: {} / {}
+                        </p>
+                        <p>Percentage Correct: {}%</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <Test
+                          questions={lesson.tests.questions}
+                          setUserAnswers={setUserAnswers}
+                        />
+                        <MyButton onClick={handleTestSubmit}>Submit</MyButton>
+                      </div>
+                    )}
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>

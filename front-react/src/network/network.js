@@ -20,7 +20,7 @@ export const signIn = async ({ email, password }) => {
 export const signUp = async ({ email, username, password }) => {
     try {
         const response = await $api.post('/signup', { email, username, password });
-        console.log("Sign up response:", response.data); // Додайте цей рядок для перевірки
+        console.log("Sign up response:", response.data);
 
         const { accessToken } = response.data.userData;
         localStorage.setItem("persist:user", JSON.stringify({ accessToken }));

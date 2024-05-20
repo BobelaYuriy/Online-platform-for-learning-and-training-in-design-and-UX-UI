@@ -23,11 +23,13 @@ const ProfilePage = () => {
   const [avatar, setAvatar] = useState("");
   const [nickname, setNickname] = useState(userData?.username || "");
   const [isEditing, setIsEditing] = useState(false);
+  const [originalAvatar, setOriginalAvatar] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (userData) {
       dispatch(setUser(userData));
+      setOriginalAvatar(userData.avatar);
       try {
         const data = checkAuth();
         console.log(data);
@@ -52,6 +54,13 @@ const ProfilePage = () => {
   const handleSaveChanges = () => {
     updateProfile({ username: nickname, avatar });
     setIsEditing(false);
+    setOriginalAvatar(avatar);
+  };
+
+  const handleCancelChanges = () => {
+    setIsEditing(false);
+    setAvatar(originalAvatar);
+    setNickname(userData.username);
   };
 
   if (isLoading) {
@@ -140,6 +149,27 @@ const ProfilePage = () => {
             {userData.enrolledCourses.map((course) => (
               <Col md={6} lg={4} className="my-3" key={course.courseId}>
                 <EnrolledCourseCard enrolledCourse={course} />
+              </Col>
+            ))}
+          </Row>
+        </Card.Body>
+      </Card>
+      <Card className="profile-section mt-4">
+        <Card.Body>
+          <Card.Title className="section-heading">Certificates</Card.Title>
+          <Row>
+            {userData.enrolledCourses.map((course) => (
+              <Col md={6} lg={4} className="my-3" key={course.courseId}>
+                <Card className="certificate-card">
+                  <Card.Body>
+                    <Card.Title>{course.courseName}</Card.Title>
+                    <img
+                      src={course.certificate}
+                      alt={`${course.courseName} certificate`}
+                      className="img-fluid"
+                    />
+                  </Card.Body>
+                </Card>
               </Col>
             ))}
           </Row>

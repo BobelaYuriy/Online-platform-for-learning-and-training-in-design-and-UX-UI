@@ -11,9 +11,18 @@ const DesignPage = () => {
     isLoading,
     isError,
   } = courseApi.useGetCoursesQuery({
-    limit: 10,
     category,
   });
+
+  const getCategoryText = (category) => {
+    const categoryText = {
+      uiux: "UI&UX",
+      design: "Design",
+      graphicdesign: "Graphic Design",
+    };
+
+    return categoryText[category] || category;
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching courses</div>;
@@ -21,7 +30,7 @@ const DesignPage = () => {
   return (
     <Container>
       <div className="container rounded p-4 bg-light">
-        <h1>Courses on {category}</h1>
+        <h1>Courses on {getCategoryText(category)}</h1>
       </div>
       <Row className="mt-2">
         {(courses || []).map((course) => (

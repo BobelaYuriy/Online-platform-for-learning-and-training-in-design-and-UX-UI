@@ -17,6 +17,7 @@
 .user-stats {
   font-size: 1.1rem;
   margin-top: 5px;
+  color: rgb(212, 193, 210);
 }
 
 .profile-section {
@@ -32,7 +33,7 @@
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(45deg, #7f00ff, #e100ff) !important;
+  background: linear-gradient(45deg, #aa3e8f, #601a69) !important;
 }
 
 .text-white {

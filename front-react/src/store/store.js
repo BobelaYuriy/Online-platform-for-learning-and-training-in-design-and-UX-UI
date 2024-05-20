@@ -11,8 +11,6 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist';
-import testReducer from './slices/testReducer';
-import coursesReducer from './slices/coursesReducer';
 import { courseApi } from '../services/coursesService';
 import { userApi } from '../services/userServices';
 
@@ -26,8 +24,6 @@ const persistedAuthReducer = persistReducer(persistConfig, userReducer);
 const store = configureStore({
     reducer: {
         user: persistedAuthReducer,
-        test: testReducer,
-        course: coursesReducer,
         [courseApi.reducerPath]: courseApi.reducer,
         [userApi.reducerPath]: userApi.reducer
     },

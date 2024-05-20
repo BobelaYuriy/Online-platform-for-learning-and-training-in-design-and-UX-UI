@@ -26,7 +26,7 @@ export const BurgerMenu = ({ userData }) => {
           userData={userData}
           size="medium"
           style={{
-            borderRadius: "50%", // Заокруглюємо краї аватара
+            borderRadius: "50%",
           }}
         />
       </button>
@@ -45,23 +45,13 @@ export const BurgerMenu = ({ userData }) => {
               userData={userData}
               size="large"
               style={{
-                borderRadius: "50%", // Заокруглюємо краї аватара
+                borderRadius: "50%",
               }}
             />
             <ul className="ulSans">
               <li>
                 <Link to="/profile" style={{ textDecoration: "none" }}>
                   Profile
-                </Link>
-              </li>
-              <li>
-                <Link to="/userCourses" style={{ textDecoration: "none" }}>
-                  Courses
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" style={{ textDecoration: "none" }}>
-                  Statistic
                 </Link>
               </li>
             </ul>

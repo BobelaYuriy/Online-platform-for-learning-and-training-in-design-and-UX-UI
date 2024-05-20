@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MyButton } from "../UI/button/MyButton";
 import Search from "../UI/search/search";
@@ -14,6 +14,8 @@ export const Header = () => {
   const { data: userData } = userApi.useGetUserQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSignOut = () => {
     dispatch(signOut());
@@ -21,6 +23,10 @@ export const Header = () => {
 
   const handleCategoryClick = (category) => {
     navigate(`/courses/${category}`);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
   };
 
   return (
@@ -44,8 +50,8 @@ export const Header = () => {
               Graphic design
             </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item onClick={() => handleCategoryClick("webdesign")}>
-              Web design
+            <NavDropdown.Item onClick={() => handleCategoryClick("design")}>
+              Design
             </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={() => handleCategoryClick("uiux")}>
@@ -54,7 +60,7 @@ export const Header = () => {
           </NavDropdown>
         </Nav>
 
-        <Search />
+        <Search onSearch={handleSearch} />
 
         <Nav className="ml-auto">
           <Nav.Item className="d-flex justify-content-between">

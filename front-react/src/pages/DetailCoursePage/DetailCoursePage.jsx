@@ -62,7 +62,7 @@ const DetailsCoursePage = () => {
         <Card>
           <Card.Body>
             <Row>
-              <Col>
+              <Col md={8}>
                 <Card.Title>{course.title}</Card.Title>
                 <Card.Text>{course.description}</Card.Text>
                 <Card.Text>Lessons:</Card.Text>
@@ -85,7 +85,7 @@ const DetailsCoursePage = () => {
                   ))}
                 </Accordion>
               </Col>
-              <Col md={4}>
+              <Col md={4} className="d-flex flex-column justify-content-end">
                 <Card.Img variant="top" src={course.image} />
                 <Card.Body>
                   {isEnrolled ? (

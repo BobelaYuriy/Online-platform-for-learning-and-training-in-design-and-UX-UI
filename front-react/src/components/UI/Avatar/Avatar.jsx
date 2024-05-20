@@ -6,9 +6,6 @@ const Avatar = ({ userData, size, onAvatarChange }) => {
   const avatarSrc = userData?.avatar ? userData.avatar : "/user.jpg";
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log("userData:", userData);
-  console.log("avatarSrc:", avatarSrc);
-
   return (
     <div
       className="avatar-container"

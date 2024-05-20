@@ -1,13 +1,23 @@
+.enrolled-courses-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Рівномірно розподіляє простір між елементами */
+  margin-bottom: -20px; /* Зменшення відступу між рядками карток */
+}
+
 .enrolled-course-card {
   width: 200px;
-  border-radius: 20px; /* Зміна заокруглення країв картки */
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
   max-height: 400px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px; /* Додавання відступу між картками */
 }
+
+/* Решта стилів залишаються без змін */
 
 .enrolled-course-card:hover {
   transform: translateY(-5px);
